@@ -1,0 +1,51 @@
+# Определение версии Docker Compose и начало описания сервисов
+version: '3' 
+services:
+  django:
+    # Сборка образа для сервиса django из текущей директории
+    build: .
+    # Задание имени контейнера для сервиса django
+    container_name: django
+    # Задание команды, которую нужно запустить при запуске контейнера 
+    # для сервиса django
+    #command: python manage.py migrate --no-input
+    volumes:
+      - .:/app
+    # Открытие порта на хостовой машине и перенаправление на порт в 
+    # контейнере
+    expose: 
+      - 8000
+    ports:
+      - 8000:8000
+    # Зависимость от другого сервиса
+    depends_on:
+      - pgdb
+
+  nginx:
+    container_name: nginx1991
+    restart: on-failure
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "5005:5005"
+    depends_on:
+      - django
+
+  pgdb:
+    # Использование готового образа postgres
+    image: postgres
+    # Задание переменных окружения для контейнера с postgres
+    environment:
+      - POSTGRES_DB=postgress
+      - POSTGRES_USER=postgress
+      - POSTGRES_PASSWORD=postgress
+     # Задание имени контейнера для сервиса pgdb
+    container_name: pgdb
+     # Связывание тома с директорией в контейнере для сохранения данных 
+     # postgres
+    volumes:
+      - pgdbdata:/var/lib/postgresql/data/
+
+volumes:
+  pgdbdata: null

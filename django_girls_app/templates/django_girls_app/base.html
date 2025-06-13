@@ -1,0 +1,17 @@
+<p>
+    <a href="{% url 'django_girls_app:index' %}">
+        Django girls
+    </a> - 
+    <a href="{% url 'django_girls_app:topics' %}">
+        Topics
+    </a> - 
+    {% if user.is_authenticated %}
+        Hello, {{ user.username }}.
+        <a href="{% url 'django_girls_app:logout_view' %}"> Log out </a>
+    {% else %}
+        <a href="{% url 'users:register' %}"> Register </a> - 
+        <a href="{% url 'users:login' %}"> Log in </a>
+    {% endif %}
+</p>
+
+{% block content %}{% endblock content %}

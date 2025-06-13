@@ -1,0 +1,10 @@
+{% extends "django_girls_app/base.html" %}
+{% block content %}
+  <p><a href="{% url 'django_girls_app:topic' topic.id %}">{{ topic }}</a></p>
+  <p>Edit entry: </p>
+  <form action="{% url 'django_girls_app:edit_entry' entry.id %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">save changes</button>
+  </form>
+  {% endblock content %}
