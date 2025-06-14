@@ -21,3 +21,7 @@ def register(request):
     context = {'form':form}
     return render(request, 'users/register.html', context)
 
+def logout_view(request):
+    logout(request)
+    # Optionally, redirect to a success page
+    return render(request, "registration/logged_out.html", {"Done":"Done!"})

@@ -1,4 +1,3 @@
-from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
@@ -111,7 +110,3 @@ def edit_entry(request, entry_id):
     context = {'entry':entry, 'topic':topic, 'form':form}
     return render(request, 'django_girls_app/edit_entry.html', context)
 
-def logout_view(request):
-    logout(request)
-    # Optionally, redirect to a success page
-    return redirect('django_girls_app:index')
